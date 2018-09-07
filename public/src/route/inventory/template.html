@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-xs-12">
+			<div class="panel panel-default panel-shadow">
+				<div class="panel-heading centered-text h4" style="margin-bottom: 0px">Lista de Productos</div>
+				<div class="panel-body">
+					<table class="table" style="table-layout: fixed">
+						<colgroup>
+							<col style="width: 40%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+						</colgroup>
+						<thead class="bg-warning center-thead">
+							<tr>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Stock</th>
+								<th>Editar</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="3"><dir-pagination-controls auto-hide="false" max-size="5"></dir-pagination-controls></td>
+								<td colspan="2"><a class="btn btn-outline-success btn-lg btn-block" ng-click="$ctrl.addProduct()"><i class="fas fa-plus"></i></a></td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr dir-paginate="product in $ctrl.products | itemsPerPage: 5 track by product._id" ng-class="{danger: product.stock <= 10 || !product.stock}">
+								<td>{{product.name}}</td>
+								<td class="centered-text">{{product.price | currency:'$':0}}</td>
+								<td>{{product.stock || 0}} uds.</td>
+								<td class="center-text"><a class="btn btn-outline-primary" ng-click="$ctrl.modifyProduct(product)"><i class="fas fa-edit"></i></a></td>
+								<td class="center-text"><a class="btn btn-outline-danger" ng-click="$ctrl.removeProduct(product)"><i class="fas fa-trash"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-xs-12">
+			<canvas id="doughnut" class="chart chart-pie" chart-data="$ctrl.chart.data" chart-labels="$ctrl.chart.label"></canvas>
+		</div>
+	</div>
+</div>

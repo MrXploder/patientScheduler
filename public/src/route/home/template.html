@@ -1,0 +1,45 @@
+<style type="text/css">
+.landing {
+	background-image: url(../img/bg.jpg);
+	background-size: cover;
+	height: 100vh;
+	clip-path: polygon(
+		0 0,
+		100% 0,
+		100% 100%,
+		0 calc(100% - 5vw)
+		);
+}
+</style>
+<div class="landing row" style="margin-top: -60px">
+	<div class="col-lg-6 col-lg-offset-3 text-center">
+		<div style="position: relative; top: 50%; transform: translate(0%, 100%);">
+			<h1>ESTIMADO<br>{{$rs.$currentUser().full_name | uppercase}}</h1>
+			<p>TODO LO QUE NECESITA PARA GESTIONAR SU NEGOCIO.</p>
+			<a class="btn btn-primary visible-md visible-lg" ui-sref="pos">Ir &raquo;</a>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<div class="row" ng-if="$rs.$currentUser().level > 1">
+	<div class="col-lg-4 text-center">
+		<p><i class="fas fa-list-ol fa-10x"></i></p>
+		<h2>Inventario</h2>
+		<p>Resumen de Inventario, últimas revisiones realizadas, ordenar por escacez de mercaderia, etc. [...]</p>
+		<p><a class="btn btn-default" href="#" ui-sref="inventory">Ir &raquo;</a></p>
+	</div>
+	<div class="col-lg-4 text-center">
+		<i class="fas fa-chart-pie fa-10x"></i>
+		<h2>Ventas</h2>
+		<p>Revisar Compras y ventas, ordenadas por mes o dia, ver crecimiento de ganancias o rastrear horario punta de ventas, toda la informacion sobre el rendimiento de su negocio acá. [...]</p>
+		<p><a class="btn btn-default" href="#" ui-sref="sales">Ir &raquo;</a></p>
+	</div>
+	<div class="col-lg-4 text-center">
+		<i class="fas fa-credit-card fa-10x"></i>
+		<h2>Contabilidad</h2>
+		<p>Lleve en orden el pago de sus impuestos, el descuento en notas de créditos, así como ofertas o deudas pendientes a su favor.</p>
+		<p><a class="btn btn-default" href="#" ui-sref="accounting">Ir &raquo;</a></p>
+	</div>
+</div>

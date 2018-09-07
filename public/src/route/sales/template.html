@@ -1,0 +1,53 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-4 col-xs-12">
+			<div class="panel panel-default panel-shadow">
+				<div class="panel-heading">Lista de Productos más Vendidos</div>
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="product in $ctrl.products | orderBy: product.sell_amount track by product._id">
+								<td>{{product.name}}</td>
+								<td>{{product.sell_amount}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-xs-12">
+			<div class="panel panel-default panel-shadow">
+				<div class="panel-heading">Lista de Promociones</div>
+				<div class="panel-body">
+					<table class="table">
+						<tbody>
+							<tr ng-repeat="promotion in $ctrl.promotions track by promotion._id">
+								<td style="word-break: break-all;">{{promotion}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-xs-12">
+			<div class="panel panel-default panel-shadow">
+				<div class="panel-heading">Boletas</div>
+				<div class="panel-body">
+					<table class="table">
+						<tbody>
+							<tr ng-repeat="invoice in $ctrl.invoices track by invoice._id">
+								<td style="word-break: break-all;">{{invoice}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
