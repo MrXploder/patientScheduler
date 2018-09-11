@@ -1,82 +1,53 @@
-(function(){
+(function() {
+	'use strict';
+
 	angular
-	.module('angularApp')
-	.factory('Printer', ['$rootScope', '$compile', '$http', '$timeout', '$q', function ($rootScope, $compile, $http, $timeout, $q) {
-		var printHtml = function (html) {
-			var deferred = $q.defer();
-			var hiddenFrame = $('<iframe style="visibility: hidden"></iframe>').appendTo('body')[0];
-			hiddenFrame.contentWindow.printAndRemove = function () {
-				hiddenFrame.contentWindow.print();
-				$(hiddenFrame).remove();
-				deferred.resolve();
-			};
-			var htmlContent = "<!doctype html>" + "<html>" + '<body onload="printAndRemove();">' + html + '</body>' + "</html>";
-			var doc = hiddenFrame.contentWindow.document.open("text/html", "replace");
-			doc.write(htmlContent);
-			doc.close();
-			return deferred.promise;
-		};
+		.module('angularApp')
+		.factory('ngPrinter', ngPrinterFactory);
 
-		var openNewWindow = function (html) {
-			var newWindow = window.open("printTest.html");
-			newWindow.addEventListener('load', function () {
-				$(newWindow.document.body).html(html);
-			}, false);
-		};
+	ngPrinterFactory.$inject = ["$compile", "$http", "$timeout", "$templateCache", "$rootScope"];
 
-		var print = function (templateUrl, data) {
-			$rootScope.isBeingPrinted = true;
-			$http.get(templateUrl).then(function(templateData) {
-				var template = templateData.data;
-				var printScope = $rootScope.$new();
-				angular.extend(printScope, data);
-				var element = $compile($('<div>' + template + '</div>'))(printScope);
-				var renderAndPrintPromise = $q.defer();
-				var waitForRenderAndPrint = function () {
-					if (printScope.$$phase || $http.pendingRequests.length) {
-						$timeout(waitForRenderAndPrint, 1000);
-					}
-					else {
-						/* Replace printHtml with openNewWindow for debugging*/
-						printHtml(element.html()).then(function () {
-							$rootScope.isBeingPrinted = false;
-							renderAndPrintPromise.resolve();
-						});
-						printScope.$destroy();
-					}
-					return renderAndPrintPromise.promise;
-				};
-				waitForRenderAndPrint();
+	function ngPrinterFactory($compile, $http, $timeout, $templateCache, $rootScope) {
+		function printHtml(html) {
+			return new Promise((resolve, reject) => {
+				let hiddenFrame = $('<iframe style="visibility: hidden"></iframe>').appendTo('body')[0];
+				let htmlContent = `<!doctype html><html><body onload="printAndRemove();">${html}</body></html>`;
+				let doc = hiddenFrame.contentWindow.document.open("text/html", "replace");
+
+				hiddenFrame.contentWindow.printAndRemove = function() {
+					hiddenFrame.contentWindow.print();
+					$(hiddenFrame).remove();
+					resolve();
+				}
+
+				doc.write(htmlContent);
+				doc.close();
 			});
-		};
+		}
 
-		var printFromScope = function (templateUrl, scope, afterPrint) {
-			$rootScope.isBeingPrinted = true;
-			$http.get(templateUrl).then(function(response){
-				var template = response.data;
-				var printScope = scope;
-				var element = $compile($('<div>' + template + '</div>'))(printScope);
-				var renderAndPrintPromise = $q.defer();
-				var waitForRenderAndPrint = function () {
-					if (printScope.$$phase || $http.pendingRequests.length) {
-						$timeout(waitForRenderAndPrint);
-					} else {
-						printHtml(element.html()).then(function () {
-							$rootScope.isBeingPrinted = false;
-							if (afterPrint) {
-								afterPrint();
-							}
-							renderAndPrintPromise.resolve();
-						});
-					}
-					return renderAndPrintPromise.promise;
-				};
+		function print(options) {
+			return new Promise((resolve, reject) => {
+				$http
+					.get(options.templateUrl)
+					.then(templateData => {
+						let template = templateData.data;
+						let printScope = $rootScope.$new();
+
+						angular.extend(printScope, options.data);
+
+						let element = $compile($(`<div>${template}</div>`))(printScope);
+
+						printHtml(element.html())
+							.then(() => {
+								printScope.$destroy();
+								resolve();
+							});
+					});
 			});
-		};
+		}
 
 		return {
 			print: print,
-			printFromScope: printFromScope
-		};
-	}]);
+		}
+	}
 })();

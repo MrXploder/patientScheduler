@@ -3,12 +3,12 @@
 
 	angular
 		.module('angularApp')
-		.factory('Operators', operators);
+		.factory('Doctors', doctors);
 
-	operators.$inject = ['$resource'];
+	doctors.$inject = ['$resource'];
 
-	function operators($resource) {
-		const Resource = $resource("/operators/:id", {
+	function doctors($resource) {
+		const Resource = $resource("/doctors/:id", {
 			id: "@_id",
 		}, {
 			create: {

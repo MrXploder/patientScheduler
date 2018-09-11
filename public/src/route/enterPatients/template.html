@@ -1,0 +1,76 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-lg-offset-3">
+			<div class="panel panel-default panel-shadow">
+				<div class="panel-heading">
+					<label class="control-label">Ingresar un Usuario al Control</label>
+				</div>
+				<div class="panel-body">
+					<!-- <pre>{{$ctrl.appointment | json}}</pre> -->
+					<form name="$ctrl.naForm" ng-submit="$ctrl.naForm.$valid && $ctrl.submitAppointment()" autocomplete="off" role="form" novalidate>
+						<div class="form-group" has-error="$ctrl.naForm.patientFullName.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.patientFullName.$touched)" has-success="$ctrl.naForm.patientFullName.$valid">
+							<label class="control-label">Usuario</label>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon"><i class="fas fa-user"></i></span>
+								<input type="text" name="patientFullName" list="patientAutoComplete" class="form-control" ng-model="$ctrl.appointment.patientFullName" required>
+								<datalist id="patientAutoComplete">
+									<option ng-repeat="patient in $ctrl.Patients track by patient._id">{{patient.fullName}}</option>
+								</datalist>
+							</div>
+							<div class="help-block" ng-messages="$ctrl.naForm.patientFullName.$error" ng-visible="$ctrl.naForm.patientFullName.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.patientFullName.$touched)">
+								<span ng-message="required">Debes Escribir un Nombre de Usuario</span>
+								<span ng-message="notfound">El Usuario no existe. <a ui-sref="home">Click Aquí para crearlo</a></span>
+								<span>&nbsp</span><!-- placeholder to prevent displacement of the input elements -->
+							</div>
+						</div>
+						<div class="form-group" has-error="$ctrl.naForm.date.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.date.$touched)" has-success="$ctrl.naForm.date.$valid">
+							<label class="control-label">Fecha</label>
+							<div class="input-group input-group-lg">
+								<span class="input-group-btn">
+									<button class="btn btn-outline-secondary" ng-class="{'btn-outline-success': $ctrl.naForm.date.$valid, 'btn-outline-danger': $ctrl.naForm.date.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.date.$touched)}" type="button" ng-click="$ctrl.openEventCalendar()"><i class="fas fa-calendar-alt"></i></button>
+								</span>
+								<input type="text" class="form-control" ng-model="$ctrl.appointment.date" name="date" required readonly>
+								<span class="input-group-addon" style="border-left: 0; border-right: 0;"> a las </span>
+								<input type="text" class="form-control" ng-model="$ctrl.appointment.time" name="time" required readonly>
+							</div>
+							<div class="help-block" ng-messages="$ctrl.naForm.date.$error" ng-visible="$ctrl.naForm.date.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.date.$touched)">
+								<span ng-message="required">Debes Elegir una Fecha</span>
+								<span>&nbsp</span><!-- placeholder to prevent displacement of the input elements -->
+							</div>
+						</div>
+						<div class="form-group" has-error="$ctrl.naForm.doctorId.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.doctorId.$touched)" has-success="$ctrl.naForm.doctorId.$valid">
+							<label class="control-label">Doctor</label>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon"><i class="fas fa-user-md"></i></span>
+								<select class="form-control" ng-model="$ctrl.appointment.doctorId" name="doctorId" required>
+									<option value="" selected hidden></option>
+									<option ng-repeat="doctor in $ctrl.Doctors track by doctor._id" ng-value="doctor._id">{{doctor.fullName}}</option>
+								</select>
+							</div>
+							<div class="help-block" ng-messages="$ctrl.naForm.doctorId.$error" ng-visible="$ctrl.naForm.doctorId.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.doctorId.$touched)">
+								<span ng-message="required">Debes Elegir un Doctor</span>
+								<span>&nbsp</span><!-- placeholder to prevent displacement of the input elements -->
+							</div>
+						</div>
+						<div class="form-group" has-error="$ctrl.naForm.sideNote.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.sideNote.$touched)" has-success="$ctrl.naForm.sideNote.$valid && $ctrl.naForm.sideNote.$touched">
+							<label class="control-label">Anotación</label>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon"><i class="fas fa-notes-medical"></i></span>
+								<input type="text" class="form-control" ng-model="$ctrl.appointment.sideNote" ng-model-options="{allowInvalid: true}" name="sideNote" ng-maxlength="100">
+							</div>
+							<span class="help-block pull-right">{{$ctrl.appointment.sideNote | characterCounter}}/100</span>
+							<div class="help-block" ng-messages="$ctrl.naForm.sideNote.$error" ng-visible="$ctrl.naForm.sideNote.$invalid && ($ctrl.naForm.$submitted || $ctrl.naForm.sideNote.$touched)">
+								<span ng-message="maxlength">Tu Anotación es demasiado extensa</span>
+								<span>&nbsp</span><!-- placeholder to prevent displacement of the input elements -->
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<button type="submit" class="btn btn-lg pull-right" ng-class="{'btn-success': $ctrl.naForm.$valid, 'btn-secondary': $ctrl.naForm.$invalid}"><i class="fas fa-save"></i></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

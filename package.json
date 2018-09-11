@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/MrXploder/PointOfSale#readme",
   "dependencies": {
+    "angular": "^1.7.4",
+    "angular-formly": "^8.4.1",
+    "angular-formly-templates-bootstrap": "^6.5.1",
+    "api-check": "^7.5.5",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "chart.js": "^2.7.2",
@@ -24,6 +28,7 @@
     "mongodb": "^3.1.1",
     "mongoose": "^5.2.7",
     "ng-focus-if": "^1.0.7",
+    "ui-select": "^0.19.8",
     "webpack": "^4.17.1"
   },
   "devDependencies": {

@@ -2,41 +2,41 @@
   @author: MrXploder
   @url: https://mrxploder.github.io/MrXploder/
   @date: 08/2018
-  @description: Operators Router File for Express
+  @description: Doctors Router File for Express
   @methods: GET, POST, PUT, DELETE.
 */
 
-const OperatorsRouter = require('express').Router();
-const OperatorsModel = require('../model/Operators');
+const DoctorsRouter = require('express').Router();
+const DoctorsModel = require('../model/Doctors');
 
 /*INITIALIZE A PARAM THAT IS USED MULTIPLE TIMES*/
-OperatorsRouter.param('operatorId', (req, res, next) => {
-  OperatorsModel
-    .findById(req.params.operatorId)
-    .then(operator => {
-      req.item = operator;
+DoctorsRouter.param('doctorId', (req, res, next) => {
+  DoctorsModel
+    .findById(req.params.doctorId)
+    .then(doctor => {
+      req.item = doctor;
       next();
     });
 });
 
 /*DEFINE A GENERAL POST, NOT BINDED BY ANY ESPECIFIC ID*/
-OperatorsRouter.post('/', (req, res, next) => {
-  const item = new OperatorsModel(req.body);
+DoctorsRouter.post('/', (req, res, next) => {
+  const item = new DoctorsModel(req.body);
   item
     .save()
     .then(item => res.send(item));
 });
 
 /*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
-OperatorsRouter.get('/', (req, res, next) => {
-  OperatorsModel
+DoctorsRouter.get('/', (req, res, next) => {
+  DoctorsModel
     .find({})
     .lean()
-    .then(operators => res.send(operators));
+    .then(doctors => res.send(doctors));
 });
 
 /*BASED ON PREVIUS ROUTER.PARAM, DEFINE GET, PUT AND DELETE FOR THAT PARAM*/
-OperatorsRouter.route('/:operatorId')
+DoctorsRouter.route('/:doctorId')
   .get((req, res, next) => {
     res.send(req.item);
   })
@@ -57,4 +57,4 @@ OperatorsRouter.route('/:operatorId')
   });
 
 /*EXPORT ROUTER*/
-module.exports = OperatorsRouter;
+module.exports = DoctorsRouter;

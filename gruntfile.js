@@ -12,14 +12,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   let _sources = [
-  'public/css/*.css',
-  'public/src/vendor/*.js',
-  'public/src/module/*.js',
-  'public/src/directive/**/*.js',
-  'public/src/factory/*.js',
-  'public/src/filter/*.js',
-  'public/src/dialog/**/*.js',
-  'public/src/route/**/*.js'
+    'public/css/*.css',
+    'public/src/vendor/*.js',
+    'public/src/module/*.js',
+    'public/src/directive/**/*.js',
+    'public/src/factory/*.js',
+    'public/src/filter/*.js',
+    'public/src/dialog/**/*.js',
+    'public/src/route/**/*.js'
   ];
 
   grunt.initConfig({
@@ -32,20 +32,20 @@ module.exports = function(grunt) {
         space: ' ',
         wrap: true,
         deps: [
-        'ui.router',
-        'ngStorage',
-        'ngResource',
-        'ngDialog',
-        'ngAnimate',
-        'platanus.rut',
-        'angular-loading-bar',
-        'angularUtils.directives.dirPagination',
-        'angular-local-resource',
-        'focus-if',
-        'angularMoment',
-        'chart.js',
-        'ngNotify',
-        'templates-main'
+          'ui.router',
+          'ui.bootstrap',
+          'ui.select',
+          'ngStorage',
+          'ngResource',
+          'ngDialog',
+          'ngAnimate',
+          'ngSanitize',
+          'ngMessages',
+          'ngNotify',
+          'platanus.rut',
+          'angular-loading-bar',
+          'angularUtils.directives.dirPagination',
+          'templates-main'
         ],
         dest: "public/src/module/10index.js",
         name: 'angularApp'
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       options: {
         base: "",
         module: 'templates-main',
-        rename: function(moduleName){
+        rename: function(moduleName) {
           return moduleName.replace('public/', '');
         }
       },
@@ -104,15 +104,16 @@ module.exports = function(grunt) {
       },
       js: {
         src: ['public/src/vendor/*.js',
-        'public/src/module/*.js',
-        'public/src/directive/**/*.js',
-        'public/src/factory/**/*.js',
-        'public/src/filter/**/*.js',
-        'public/src/dialog/**/*.js',
-        'public/src/route/**/*.js'],
+          'public/src/module/*.js',
+          'public/src/directive/**/*.js',
+          'public/src/factory/**/*.js',
+          'public/src/filter/**/*.js',
+          'public/src/dialog/**/*.js',
+          'public/src/route/**/*.js'
+        ],
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.js',
       },
-      css:{
+      css: {
         src: ['public/css/*.css'],
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.css',
       }
@@ -167,8 +168,8 @@ module.exports = function(grunt) {
       },
       default: {
         staticFileGlobs: [
-        'dist/<%= gitinfo.local.branch.current.SHA %>.min.js',
-        'dist/<%= gitinfo.local.branch.current.SHA %>.min.css',
+          'dist/<%= gitinfo.local.branch.current.SHA %>.min.js',
+          'dist/<%= gitinfo.local.branch.current.SHA %>.min.css',
         ],
       }
     },

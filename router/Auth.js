@@ -1,26 +1,27 @@
-/*
-*@author: MrXploder
-*@url: https://mrxploder.github.io/MrXploder/
-*@date: 08/2018
-*@description:
-*@methods: GET, POST, PUT, DELETE.
+/**
+  @author:      MrXploder
+  @url:         https://mrxploder.github.io/MrXploder/
+  @date:        08/2018
+  @description:
+  @methods:     POST.
 */
+
 (function() {
   const _ = require('lodash');
-  const AuthRouter  = require('express').Router();
+  const AuthRouter = require('express').Router();
   const OperatorsModel = require('../model/Operators');
-  const BranchesModel = require('../model/Branches');
 
-  AuthRouter.post('/', function(req, res, next){
-    let rut = req.body.rut,
-    password = req.body.password;
-
-    OperatorsModel.findOne({rut, password})
-    .then(function(operator){
-      if(_.isEmpty(operator)) throw('error');
-      else res.send(operator);
-    })
-    .catch(() => res.status(404).send(""));
+  AuthRouter.post('/', function(req, res, next) {
+    OperatorsModel
+      .findOne({
+        nickName: req.body.nickName,
+        password: req.body.password,
+      })
+      .then(function(operator) {
+        if (Object.keys(operator).length === 0) throw ('error');
+        else res.send(operator);
+      })
+      .catch(() => res.status(404).send(""));
   });
 
   /*EXPORT ROUTER*/

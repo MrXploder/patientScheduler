@@ -1,13 +1,13 @@
-(function(){
+(function() {
   'use strict';
 
   angular
-  .module('angularApp')
-  .directive('ngCurrency', currencyInputDirective);
+    .module('angularApp')
+    .directive('ngCurrency', currencyInputDirective);
 
   currencyInputDirective.$inject = ["$filter", "$browser"];
 
-  function currencyInputDirective($filter, $browser){
+  function currencyInputDirective($filter, $browser) {
     return {
       restrict: "A",
       require: 'ngModel',
